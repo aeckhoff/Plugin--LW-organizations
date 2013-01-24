@@ -1,0 +1,60 @@
+<?php
+    function showError($error)
+    {
+        if($error): ?>
+        <div class="alert alert-block alert-error" style="color:#cc0000; margin-bottom:20px;">
+            <?php foreach($error as $errorcode => $array): ?>
+            <b class="alert-heading">Fehler:</b>
+            <p><?php             
+            switch ($errorcode) {
+                case LW_MAXLENGTH_ERROR:
+                    ?>Die Maximall&auml;nge ist &uuml;berschritten, bitte k&uuml;rzen sie ihren Eintrag.<?php
+                    break;                
+                default:
+                    ?>Der Fehler konnte nicht n&auml;her eingegrenzt werden!<?php
+                    break;
+            }
+            ?></p>
+            <?php endforeach; ?>
+        </div>
+        <?php endif;
+    }
+?>
+<hr />
+<div class="clearfix">
+	<div class="left">
+		<h1>Organisation bearbeiten</h1>
+    </div>
+    <div class="control-bar right">
+	    <a class="btn" href="<?php echo $this->backUrl; ?>">zur&uuml;ck</a>
+    </div>
+</div>
+<hr />
+<div class="clearfix">
+	<?php if(is_array($this->errors)): ?>
+        <div class="alert page-error" style="color:#cc0000;"><b>Es gibt Fehler!</b></div>
+    <?php endif; ?>    
+    <form id="form" action="<?php echo $this->actionUrl; ?>" method="post" >
+        
+        <table>
+        <tr>
+            <td width="90" valign="top"><label class="control-label" for="opt1text">K&uuml;rzel:</label></td>
+            <td>
+                <input type="text" name="opt1text" value="<?php echo $this->entity['opt1text']; ?>" />
+                <?php showError($this->errors['opt1text']); ?>
+            </td>
+        </tr>  
+        <tr>
+            <td valign="top"><label class="control-label" for="name">Name:</label></td>
+            <td>
+                <input type="text" name="name" value="<?php echo $this->entity['name']; ?>" />
+                <?php showError($this->errors['name']); ?>
+            </tr>
+        </tr>
+        </table>
+        <br/>
+        <div class="control-group inline-submit">
+            <input type="submit" value="speichern" />
+        </div>       
+    </form>
+</div>

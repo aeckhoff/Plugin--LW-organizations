@@ -1,0 +1,48 @@
+<hr />
+<div class="clearfix">
+	<div class="left">
+		<h1>Organizationen</h1>
+    </div>
+    <div class="control-bar right">
+	    <a class="btn" href="<?php echo $this->newUrl; ?>">neue Organisation anlegen</a>
+    </div>
+</div>
+<hr />
+<table class="table table-striped" style="border-collapse:collapse;">
+    <thead>
+        <tr>
+            <th width="100" align="left">K&uuml;rzel</th>
+            <th width="350" align="left">Name</th>
+            <th width="60" align="left">&nbsp;</th>
+            <th width="60" align="left">&nbsp;</th>
+        </tr>
+    </thead>
+	<?php 
+        if ($this->aggregate->count()>0):
+            foreach($this->aggregate as $fb): 
+            if ($oddeven == "#cccccc"): $oddeven="#ffffff"; else: $oddeven="#cccccc"; endif; 
+            ?>   
+    <tr style="background-color:<?php echo $oddeven; ?>">
+        <td class="kuerzel">
+            <?php echo $fb->getValueByKey('opt1text'); ?>
+        </td>
+        <td>
+            <?php echo $fb->getValueByKey('name'); ?>
+        </td>
+        <td class="option">
+            <a href="<?php echo \lw_page::getInstance()->getUrl(array('cmd'=>'editForm', "id"=>$fb->getValueByKey('id'), "category_id" => $this->categoryId)); ?>">bearbeiten</a>
+        </td>
+        <td class="option">
+            <?php if($this->deletableSpecification->isSatisfiedBy($fb)): ?>
+            <a onclick="return confirm('wirklich löschen?');" href="<?php echo \lw_page::getInstance()->getUrl(array('cmd'=>'delete', "id"=>$fb->getValueByKey('id'))); ?>">l&ouml;schen</a>
+            <?php endif; ?>
+        </td>
+    </tr>
+	<?php 
+            endforeach; 
+    else: ?>
+		<tr class="warning">
+        	<td colspan="4"><p class="text-warning">Keine Organisationen vorhanden!</p></td>
+        </tr>
+    <?php endif; ?>
+</table>
