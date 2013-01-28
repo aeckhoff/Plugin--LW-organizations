@@ -30,7 +30,7 @@ class EventHandler
     
     protected function getIsDeletableSpecification()
     {
-        $this->event->getResponse()->setDataByKey('isDeletableSpecification', \lwOrganizations\Domain\Organization\Specification\isValid::getInstance());
+        $this->event->getResponse()->setDataByKey('isDeletableSpecification', \lwOrganizations\Domain\Organization\Specification\isDeletable::getInstance());
         return $this->event->getResponse();
     }
     
